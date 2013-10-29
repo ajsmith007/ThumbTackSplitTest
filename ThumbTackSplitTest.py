@@ -19,7 +19,7 @@ import sys
 import csv
 import datetime
 import scipy
-#import scipy.stats.stats
+import scipy.stats.stats
 import numpy as np
 
 ########################################################################################
@@ -51,12 +51,11 @@ def main():
         # Compute Chi-squared for each pair of baseline and test
         observed = np.array([data[baseline][0], data[test][0]])
         expected = np.array([0.5, 0.5]) * np.sum(observed)
-        chi2 = 0
-        #chi2 = chisquare(observed, expected)
+        chiSq = scipy.stats.stats.chisquare(observed, expected)
         
         print "Observed: " + str(observed)
         print "Expected: " + str(expected)
-        print "ChiSq = " + str(chi2) + "\n"
+        print "ChiSq = " + str(chiSq) + "\n"
     
 ########################################################################################
 # Main
