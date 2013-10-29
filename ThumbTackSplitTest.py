@@ -47,15 +47,23 @@ def main():
     # Compute the significance of the results using Chi-squared
     baseline = 0
     for test in range(1,len(data)):
-        print "Test #" + str(test)
+        print "Variation #" + str(test)
         # Compute Chi-squared for each pair of baseline and test
+        trials = np.array([data[baseline][1],data[test][1]])
         observed = np.array([data[baseline][0], data[test][0]])
-        expected = np.array([0.5, 0.5]) * np.sum(observed)
+        expected = np.array([0.5, 0.5]) * np.sum(observed)    # only true if you assume number of trials were equal between A and B tests
+        #expected = np.array([(observed[baseline]/trials[baseline])*trials[baseline], (observed[baseline]/trials[baseline])*trials[1]])
         chiSq = scipy.stats.stats.chisquare(observed, expected)
-        
         print "Observed: " + str(observed)
         print "Expected: " + str(expected)
-        print "ChiSq = " + str(chiSq) + "\n"
+        print "Trials: " + str(trials)
+        print "ChiSq = " + str(chiSq[0]) 
+        print "p-value = " + str(chiSq[1])
+        if (chiSq[0] > 3.841) & (chiSq[1] < 0.05) : # Test for significance with 1 DOF at 95% confidence level
+            print "This test is statistically significant at the 95% confidence level"
+        else:
+            print "This test is not statistically significant"
+        print "\n"
     
 ########################################################################################
 # Main
