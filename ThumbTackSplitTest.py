@@ -18,8 +18,8 @@ Created on: Oct 29, 2013
 import sys
 import csv
 import datetime
-import scipy
-import scipy.stats.stats
+import scipy.version as spversion
+import scipy.stats as spstats
 import numpy as np
 
 ########################################################################################
@@ -53,7 +53,7 @@ def main():
         observed = np.array([data[baseline][0], data[test][0]])
         expected = np.array([0.5, 0.5]) * np.sum(observed)    # only true if you assume number of trials were equal between A and B tests
         #expected = np.array([(observed[baseline]/trials[baseline])*trials[baseline], (observed[baseline]/trials[baseline])*trials[1]])
-        chiSq = scipy.stats.stats.chisquare(observed, expected)
+        chiSq = spstats.stats.chisquare(observed, expected)
         print "Observed: " + str(observed)
         print "Expected: " + str(expected)
         print "Trials: " + str(trials)
@@ -73,5 +73,5 @@ if __name__ == '__main__':
     print "Starting ThumbTack Split Test Analysis on: " + datetime.datetime.now().ctime() + "\n"
     print "ThumbTackSplitTest Version: " + VERSION
     print "NumPy Version: " + np.version.version
-    print "SciPy Version: " + scipy.version.version + "\n"
+    print "SciPy Version: " + spversion.version + "\n"
     main()
